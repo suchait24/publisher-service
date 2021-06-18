@@ -23,7 +23,7 @@ public class MessageService {
 
     public void processPublishing() throws InterruptedException, ExecutionException, JAXBException, IOException {
 
-        List<String> messageList = new ArrayList<>();
+        //List<String> messageList = new ArrayList<>();
         Random random = new Random();
 
         byte[] array = new byte[15]; // length is bounded by 7
@@ -47,10 +47,11 @@ public class MessageService {
             teletypeEventDTO.setHostRecordLocator(hostLocatorCode);
 
             String message = MessageConverter.marshall(teletypeEventDTO);
-            messageList.add(message);
+            //messageList.add(message);
+
+            messagePublisher.publishMessage(message);
         }
 
-        messagePublisher.publishMessage(messageList);
     }
 
     private String generateRandomString(Random random) {
