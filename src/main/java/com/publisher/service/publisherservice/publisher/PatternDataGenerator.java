@@ -35,7 +35,7 @@ public class PatternDataGenerator {
         dataSet.put(9, 850);
         dataSet.put(10, 700);
 
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < 20; i++) {
 
             for(int j = 1; j <= 10; j++) {
 
