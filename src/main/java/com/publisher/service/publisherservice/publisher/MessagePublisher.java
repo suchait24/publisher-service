@@ -29,7 +29,7 @@ public class MessagePublisher {
 	@Value("${app.topic.name}")
 	private String topicName;
 
-	public void publishMessage(List<String> messageList) throws InterruptedException, IOException, JAXBException, ExecutionException {
+	public void publishMessage(List<String> messageList, long messageCountBatchSize) throws InterruptedException, IOException, JAXBException, ExecutionException {
 
 		Publisher publisher = null;
 		List<ApiFuture<String>> messageIdFutures = new ArrayList<>();
@@ -37,8 +37,6 @@ public class MessagePublisher {
 		try {
 			// Batch settings control how the publisher batches messages
 			long requestBytesThreshold = 5000L; // default : 1 byte
-			long messageCountBatchSize = 100L; // default : 1 message
-
 			Duration publishDelayThreshold = Duration.ofMillis(100); // default : 1 ms
 
 			// Publish request get triggered based on request size, messages count & time since last
@@ -67,7 +65,7 @@ public class MessagePublisher {
 			// Wait on any pending publish requests.
 			List<String> messageIds = ApiFutures.allAsList(messageIdFutures).get();
 
-			System.out.println("Published " + messageIds.size() + " messages with batch settings.");
+			log.info("Published " + messageIds.size() + " messages with batch settings.");
 
 			if (publisher != null) {
 				// When finished with the publisher, shutdown to free up resources.

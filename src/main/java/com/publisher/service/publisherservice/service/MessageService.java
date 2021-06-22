@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -28,7 +26,7 @@ public class MessageService {
 
         byte[] array = new byte[15]; // length is bounded by 7
 
-        int number = 1000;
+        int number = 200;
 
         for (int i = 0; i < number; i++) {
 
@@ -37,9 +35,9 @@ public class MessageService {
             String carrierCode = generateRandomString(random);
             String hostLocatorCode = generateRandomString(random);
 
-            log.info("messageCorelationId : {}", messageCorelationId);
-            log.info("carrierCode : {}", carrierCode);
-            log.info("hostlocatorCode : {}", hostLocatorCode);
+            //log.info("messageCorelationId : {}", messageCorelationId);
+            //log.info("carrierCode : {}", carrierCode);
+            //log.info("hostlocatorCode : {}", hostLocatorCode);
 
             TeletypeEventDTO teletypeEventDTO = new TeletypeEventDTO();
             teletypeEventDTO.setCarrierCode(carrierCode);
@@ -50,7 +48,7 @@ public class MessageService {
             messageList.add(message);
         }
 
-        messagePublisher.publishMessage(messageList);
+        messagePublisher.publishMessage(messageList,100);
     }
 
     private String generateRandomString(Random random) {
