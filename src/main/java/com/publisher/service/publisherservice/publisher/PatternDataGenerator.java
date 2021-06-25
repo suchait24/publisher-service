@@ -1,3 +1,4 @@
+/*
 package com.publisher.service.publisherservice.publisher;
 
 import com.publisher.service.publisherservice.dto.TeletypeEventDTO;
@@ -83,3 +84,5 @@ public class PatternDataGenerator {
                 .toString().toUpperCase();
     }
 }
+
+ */
