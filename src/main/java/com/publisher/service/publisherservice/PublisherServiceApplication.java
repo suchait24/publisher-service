@@ -18,6 +18,6 @@ public class PublisherServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		patternDataGenerator.generateData();
+		//patternDataGenerator.generateData();
 	}
 }
