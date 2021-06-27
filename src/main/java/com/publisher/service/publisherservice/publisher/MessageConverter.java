@@ -1,5 +1,6 @@
 package com.publisher.service.publisherservice.publisher;
 
+import com.publisher.service.publisherservice.dto.NoteDTO;
 import com.publisher.service.publisherservice.dto.TeletypeEventDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,20 @@ public class MessageConverter {
 
 		StringWriter stringWriter = new StringWriter();
 		marshaller.marshal(teletypeEventDTO, stringWriter);
+
+		String result = stringWriter.toString();
+		log.info("Teletype XML generated : {}", result);
+
+		return result;
+	}
+
+	public static String marshallNoteDTO(NoteDTO noteDTO) throws JAXBException {
+
+		JAXBContext jaxbContext = JAXBContext.newInstance(NoteDTO.class);
+		Marshaller marshaller = jaxbContext.createMarshaller();
+
+		StringWriter stringWriter = new StringWriter();
+		marshaller.marshal(noteDTO, stringWriter);
 
 		String result = stringWriter.toString();
 		log.info("Teletype XML generated : {}", result);

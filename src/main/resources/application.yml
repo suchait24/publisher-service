@@ -6,10 +6,7 @@ spring:
     gcp:
       project-id: sab-ors-poc-sbx-01-9096
       #credentials.location: file:C:\\Users\\SG0310427\\Downloads\\sab-ors-poc-sbx-01-9096-f8581ce293f7.json
-      spanner:
-        instance-id: instance-1
-        database: database-1
 
 app:
-  topic.name: projects/sab-ors-poc-sbx-01-9096/topics/topic-1
+  topic.name: projects/sab-dev-config-mgmt-2068/topics/TMGInBound
 
