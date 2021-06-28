@@ -28,7 +28,7 @@ public class MessageService {
 
         byte[] array = new byte[15]; // length is bounded by 7
 
-        int number = 10;
+        int number = 100000;
 
         for (int i = 0; i < number; i++) {
 
