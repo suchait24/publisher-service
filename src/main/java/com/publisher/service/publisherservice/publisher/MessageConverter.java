@@ -63,7 +63,7 @@ public class MessageConverter {
 
 		NoteDTO noteDTO = (NoteDTO) unmarshaller.unmarshal(new StringReader(message));
 
-		log.info("Teletype dto generated : {}", noteDTO);
+		//log.info("Teletype dto generated : {}", noteDTO);
 
 		return noteDTO;
 	}
