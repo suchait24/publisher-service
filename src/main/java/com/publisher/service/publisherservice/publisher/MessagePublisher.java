@@ -52,7 +52,7 @@ public class MessagePublisher {
 							.build();
 
 			// Create a publisher instance with default settings bound to the topic
-			publisher = Publisher.newBuilder(topicName).setBatchingSettings(batchingSettings).build();
+			publisher = Publisher.newBuilder(topicName).setEnableMessageOrdering(true).setBatchingSettings(batchingSettings).build();
 
 			// schedule publishing one message at a time : messages get automatically batched
 			Publisher finalPublisher = publisher;

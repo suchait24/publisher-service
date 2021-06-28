@@ -58,7 +58,7 @@ public class MessageConverter {
 
 	public static NoteDTO unmarshallNoteDTO(String message) throws JAXBException {
 
-		JAXBContext jaxbContext = JAXBContext.newInstance(TeletypeEventDTO.class);
+		JAXBContext jaxbContext = JAXBContext.newInstance(NoteDTO.class);
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 		NoteDTO noteDTO = (NoteDTO) unmarshaller.unmarshal(new StringReader(message));
