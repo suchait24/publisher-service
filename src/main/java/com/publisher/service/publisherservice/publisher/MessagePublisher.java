@@ -14,6 +14,7 @@ import org.threeten.bp.Duration;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -57,7 +58,12 @@ public class MessagePublisher {
 			Publisher finalPublisher = publisher;
 			messageList.forEach(message -> {
 				ByteString data = ByteString.copyFromUtf8(message);
-				PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
+				PubsubMessage pubsubMessage = null;
+				try {
+					pubsubMessage = PubsubMessage.newBuilder().setData(data).setOrderingKey(MessageConverter.unmarshallNoteDTO(message).getPnrid()).build();
+				} catch (JAXBException e) {
+					e.printStackTrace();
+				}
 
 				// Once published, returns a server-assigned message id (unique within the topic)
 				ApiFuture<String> messageIdFuture = finalPublisher.publish(pubsubMessage);

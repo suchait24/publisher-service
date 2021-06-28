@@ -56,4 +56,16 @@ public class MessageConverter {
 		return result;
 	}
 
+	public static NoteDTO unmarshallNoteDTO(String message) throws JAXBException {
+
+		JAXBContext jaxbContext = JAXBContext.newInstance(TeletypeEventDTO.class);
+		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+		NoteDTO noteDTO = (NoteDTO) unmarshaller.unmarshal(new StringReader(message));
+
+		log.info("Teletype dto generated : {}", noteDTO);
+
+		return noteDTO;
+	}
+
 }
