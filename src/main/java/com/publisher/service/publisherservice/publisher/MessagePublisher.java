@@ -32,27 +32,24 @@ public class MessagePublisher {
 
 	public void publishMessage(List<String> messageList) throws InterruptedException, IOException, JAXBException, ExecutionException {
 
+		Publisher publisher = Publisher.newBuilder(topicName).setEnableMessageOrdering(true).build();
+
+		messageList.forEach(message -> {
+			ByteString data = ByteString.copyFromUtf8(message);
+			try {
+				PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).setOrderingKey(MessageConverter.unmarshallNoteDTO(message).getPnrid()).build();
+				publisher.publish(pubsubMessage);
+			} catch (JAXBException e) {
+				e.printStackTrace();
+			}
+		});
+
+		/*
 		Publisher publisher = null;
 		List<ApiFuture<String>> messageIdFutures = new ArrayList<>();
 
 		try {
-			// Batch settings control how the publisher batches messages
-			long requestBytesThreshold = 5000L; // default : 1 byte
-			long messageCountBatchSize = 100L; // default : 1 message
-
-			Duration publishDelayThreshold = Duration.ofMillis(100); // default : 1 ms
-
-			// Publish request get triggered based on request size, messages count & time since last
-			// publish, whichever condition is met first.
-			BatchingSettings batchingSettings =
-					BatchingSettings.newBuilder()
-							.setElementCountThreshold(messageCountBatchSize)
-							.setRequestByteThreshold(requestBytesThreshold)
-							.setDelayThreshold(publishDelayThreshold)
-							.build();
-
-			// Create a publisher instance with default settings bound to the topic
-			publisher = Publisher.newBuilder(topicName).setEnableMessageOrdering(true).setBatchingSettings(batchingSettings).build();
+			publisher = Publisher.newBuilder(topicName).setEnableMessageOrdering(true).build();
 
 			// schedule publishing one message at a time : messages get automatically batched
 			Publisher finalPublisher = publisher;
@@ -81,6 +78,8 @@ public class MessagePublisher {
 				publisher.awaitTermination(1, TimeUnit.MINUTES);
 			}
 		}
+
+		 */
 	}
 
 }

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -22,7 +24,7 @@ public class NoteService {
 
     public void produceMessages() throws JAXBException, InterruptedException, ExecutionException, IOException {
 
-        List<String> messagesList = new ArrayList<>();
+        List<String> messagesList = new LinkedList<>();
 
         int number = 3;
         int defaultPnr = 100;
@@ -37,6 +39,7 @@ public class NoteService {
                 noteDTO.setHeading("Reminder");
                 noteDTO.setBody("Body 6");
                 noteDTO.setPnrid(defaultPnr + "-"+ j);
+                noteDTO.setTimestamp(System.currentTimeMillis());
 
                 messagesList.add(MessageConverter.marshallNoteDTO(noteDTO));
                 log.info("message : {}", noteDTO);
