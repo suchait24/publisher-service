@@ -1,6 +1,7 @@
-/*
 package com.publisher.service.publisherservice.publisher;
 
+import com.publisher.service.publisherservice.dto.AddressLine;
+import com.publisher.service.publisherservice.dto.MessageBody;
 import com.publisher.service.publisherservice.dto.TeletypeEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +22,6 @@ public class PatternDataGenerator {
     public void generateData() throws JAXBException, InterruptedException, ExecutionException, IOException {
 
         Random random = new Random();
-
-        byte[] array = new byte[15]; // length is bounded by 7
 
         Map<Integer, Integer> dataSet = new HashMap<>();
         dataSet.put(1, 200);
@@ -48,24 +47,33 @@ public class PatternDataGenerator {
 
                     Integer messageCorelationId = random.nextInt(10000);
 
-                    String carrierCode = generateRandomString(random);
-                    String hostLocatorCode = generateRandomString(random);
+                    String resourceLocator = "HDQ1S"+generateRandomString(random);
 
-                    //log.info("messageCorelationId : {}", messageCorelationId);
-                    //log.info("carrierCode : {}", carrierCode);
-                    //log.info("hostlocatorCode : {}", hostLocatorCode);
+                    String[] messageBodyLine={"TRL",resourceLocator,"HDQEY AAABBC","1CUMBERBATCH/BENEDICTMR","EY042J20DEC DUBAUH HK1","OSI 1S THANK YOU FOR BOOKING ETIHAD"};
+
+                    MessageBody messageBody= new MessageBody();
+                    messageBody.setLine(messageBodyLine);
+                    AddressLine addressLine = new AddressLine();
+                    addressLine.setDestination("HDQRM1S");
+                    addressLine.setPriority("QD");
 
                     TeletypeEventDTO teletypeEventDTO = new TeletypeEventDTO();
-                    teletypeEventDTO.setCarrierCode(carrierCode);
-                    teletypeEventDTO.setMessageCorelationId(messageCorelationId.longValue());
-                    teletypeEventDTO.setHostRecordLocator(hostLocatorCode);
+                    teletypeEventDTO.setOrigin("HDQRMEY");
+                    teletypeEventDTO.setTimestamp("2019/06/10 09:32");
+                    teletypeEventDTO.setAddressLine(addressLine);
+                    teletypeEventDTO.setMessageCorrelationID("SABRE04P-1E95E72-96H5V87QC6BA2ROTQTOLO2M1INA6N7PHG8");
+                    teletypeEventDTO.setMessageIdentity("100932/38044891");
+                    teletypeEventDTO.setStandardMessageIdentifier("TRL");
+                    teletypeEventDTO.setMessageType("TEXT");
+                    teletypeEventDTO.setMessageBody(messageBody);
+
 
                     String message = MessageConverter.marshall(teletypeEventDTO);
                     msgsList.add(message);
                 }
 
                 //batch call here
-                messagePublisher.publishMessage(msgsList,batchSize);
+                messagePublisher.publish(msgsList);
 
             }
         }
@@ -85,4 +93,3 @@ public class PatternDataGenerator {
     }
 }
 
- */

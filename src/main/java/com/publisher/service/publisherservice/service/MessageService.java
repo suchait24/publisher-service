@@ -59,7 +59,7 @@ public class MessageService {
             messageList.add(message);
         }
 
-        messagePublisher.publishMessage(messageList,100);
+        messagePublisher.publishMessageInBatch(messageList,100);
     }
 
     private String generateRandomString(Random random) {

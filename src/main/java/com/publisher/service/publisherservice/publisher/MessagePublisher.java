@@ -29,7 +29,19 @@ public class MessagePublisher {
 	@Value("${app.topic.name}")
 	private String topicName;
 
-	public void publishMessage(List<String> messageList, long messageCountBatchSize) throws InterruptedException, IOException, JAXBException, ExecutionException {
+	public void publish(List<String> messageList) throws IOException {
+
+		Publisher publisher = Publisher.newBuilder(topicName).build();
+
+		for(String message : messageList) {
+			ByteString data = ByteString.copyFromUtf8(message);
+			PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
+			log.info("pubsub message generated : {}", pubsubMessage);
+			publisher.publish(pubsubMessage);
+		}
+	}
+
+	public void publishMessageInBatch(List<String> messageList, long messageCountBatchSize) throws InterruptedException, IOException, JAXBException, ExecutionException {
 
 		Publisher publisher = null;
 		List<ApiFuture<String>> messageIdFutures = new ArrayList<>();
