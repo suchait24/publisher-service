@@ -36,7 +36,7 @@ public class MessagePublisher {
 		for(String message : messageList) {
 			ByteString data = ByteString.copyFromUtf8(message);
 			PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
-			log.info("pubsub message generated : {}", pubsubMessage);
+			//log.info("pubsub message generated : {}", pubsubMessage);
 			publisher.publish(pubsubMessage);
 		}
 	}
