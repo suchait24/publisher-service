@@ -34,6 +34,18 @@ public class MessagePublisher {
 
 		Publisher publisher = Publisher.newBuilder(topicName).setEnableMessageOrdering(true).build();
 
+		for(String message : messageList) {
+
+			ByteString data = ByteString.copyFromUtf8(message);
+			try {
+				PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).setOrderingKey(MessageConverter.unmarshallNoteDTO(message).getPnrid()).build();
+				publisher.publish(pubsubMessage);
+			} catch (JAXBException e) {
+				e.printStackTrace();
+			}
+		}
+
+		/*
 		messageList.forEach(message -> {
 			ByteString data = ByteString.copyFromUtf8(message);
 			try {
@@ -43,6 +55,8 @@ public class MessagePublisher {
 				e.printStackTrace();
 			}
 		});
+
+		 */
 
 		/*
 		Publisher publisher = null;
