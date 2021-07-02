@@ -11,5 +11,5 @@ spring:
         database: database-1
 
 app:
-  topic.name: projects/sab-ors-poc-sbx-01-9096/topics/tty-topic-demo-1
+  topic.name: projects/sab-ors-poc-sbx-01-9096/topics/ingest-service-demo
 

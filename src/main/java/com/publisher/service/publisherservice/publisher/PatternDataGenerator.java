@@ -35,9 +35,11 @@ public class PatternDataGenerator {
         dataSet.put(9, 850);
         dataSet.put(10, 700);
 
-        for(int i = 0; i < 20; i++) {
+        Integer pos = 0;
 
-            for(int j = 1; j <= 10; j++) {
+        for(int i = 0; i < 1; i++) {
+
+            for(int j = 1; j <= 1; j++) {
 
                 List<String> msgsList = new ArrayList<>();
                 long batchSize = dataSet.get(j);
@@ -58,7 +60,7 @@ public class PatternDataGenerator {
                     addressLine.setPriority("QD");
 
                     TeletypeEventDTO teletypeEventDTO = new TeletypeEventDTO();
-                    teletypeEventDTO.setOrigin("HDQRMEY");
+                    teletypeEventDTO.setOrigin("HDQRMEY" + pos++);
                     teletypeEventDTO.setTimestamp("2019/06/10 09:32");
                     teletypeEventDTO.setAddressLine(addressLine);
                     teletypeEventDTO.setMessageCorrelationID("SABRE04P-1E95E72-96H5V87QC6BA2ROTQTOLO2M1INA6N7PHG8");

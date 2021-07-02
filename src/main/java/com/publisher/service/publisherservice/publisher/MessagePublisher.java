@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.cloud.pubsub.v1.Publisher;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +30,18 @@ public class MessagePublisher {
 	@Value("${app.topic.name}")
 	private String topicName;
 
-	public void publish(List<String> messageList) throws IOException {
+	public void publish(List<String> messageList) throws IOException, JAXBException {
 
-		Publisher publisher = Publisher.newBuilder(topicName).build();
+		Publisher publisher = Publisher.newBuilder(topicName).setEnableMessageOrdering(true).build();
 
 		for(String message : messageList) {
 			ByteString data = ByteString.copyFromUtf8(message);
-			PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
-			//log.info("pubsub message generated : {}", pubsubMessage);
+			PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
+					.setData(data)
+					//.setOrderingKey(MessageConverter.unmarshall(message).getOrigin())
+					.putAllAttributes(ImmutableMap.of("orderingKey", "Origin")).setOrderingKey("Origin")
+					.build();
+			log.info("Message : {}", pubsubMessage);
 			publisher.publish(pubsubMessage);
 		}
 	}
