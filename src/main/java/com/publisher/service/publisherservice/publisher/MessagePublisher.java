@@ -41,7 +41,7 @@ public class MessagePublisher {
 					//.setOrderingKey(MessageConverter.unmarshall(message).getOrigin())
 					.putAllAttributes(ImmutableMap.of("orderingKey", "Origin")).setOrderingKey("Origin")
 					.build();
-			log.info("Message : {}", pubsubMessage);
+			//log.info("Message : {}", pubsubMessage);
 			publisher.publish(pubsubMessage);
 		}
 	}
